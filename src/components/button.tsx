@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { StartIcon } from "../icons/startIcon";
+
 
 
   interface Buttonprops{
@@ -24,7 +24,7 @@ const sizes = {
 
 export const Button = (props:Buttonprops)=>{
     return<button
-  className={`flex  ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]}`
+  className={`flex ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]}`
   }
 >
  {props.startIcon?<div className="mr-2">{props.startIcon}</div>:null} {props.text}
