@@ -13,6 +13,7 @@ import type { ReactElement } from "react";
 const variantchoice = {
     "primary":"bg-[#fcba03] ",
     "secondary":"bg-[#fcba03] ",
+    
 }
 const defaultstyles = "rounded-md ";
 const sizes = {
@@ -24,9 +25,9 @@ const sizes = {
 
 export const Button = (props:Buttonprops)=>{
     return<button
-  className={`flex ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]}`
+  className={`flex ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]} cursor-pointer`
   }
->
+onClick={props.onClick}>
  {props.startIcon?<div className="mr-2">{props.startIcon}</div>:null} {props.text}
 </button>
 
