@@ -26,6 +26,7 @@ export const Card= (props:Cardprops)=>{
 
 
 
+
         {props.type=="Twitter"&&  <div>
 
 <blockquote className="twitter-tweet">

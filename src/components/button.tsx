@@ -9,6 +9,8 @@ import type { ReactElement } from "react";
     startIcon?:any;
     endIcon?: ReactElement;
     onClick?:()=> void;
+    fullWidth?:boolean;
+    loading?:boolean
 }
 const variantchoice = {
     "primary":"bg-[#fcba03] ",
@@ -24,10 +26,10 @@ const sizes = {
 
 
 export const Button = (props:Buttonprops)=>{
-    return<button
-  className={`flex ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]} cursor-pointer`
-  }
-onClick={props.onClick}>
+    return<button onClick = {props.onClick} disabled={props.loading}
+  className={`flex ${variantchoice[props.variant]} ${defaultstyles} ${sizes[props.size]} cursor-pointer ${props.fullWidth? "w-full" : ""}`
+  } 
+>
  {props.startIcon?<div className="mr-2">{props.startIcon}</div>:null} {props.text}
 </button>
 
