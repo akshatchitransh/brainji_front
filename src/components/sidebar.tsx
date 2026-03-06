@@ -1,6 +1,6 @@
 import { TwitterIcon } from "../icons/twittericon"
 import { YoutubeIcon } from "../icons/YoutubeIcon"
-import { SidebarItem } from "./sidebaritem"
+
 
 export const Sidebar = () => {
   return (
