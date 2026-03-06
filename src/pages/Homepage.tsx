@@ -667,7 +667,9 @@ export const Homepage = () => {
           <button className="nav-link" onClick={() => navigate("/features")}>
   Features
 </button>
-            <button className="nav-link">How it works</button>
+          <button className="nav-link" onClick={() => navigate("/how-it-works")}>
+  How it works
+</button>
             <button className="nav-link" onClick={() => navigate("/signin")}>Sign in</button>
             <button className="nav-cta" onClick={() => navigate("/signup")}>Get started free →</button>
           </div>

@@ -1,6 +1,7 @@
 import Dashboard from "./pages/Dashboard"
 import Features from "./pages/Features"
 import { Homepage } from "./pages/Homepage"
+import HowItWorks from "./pages/HowItWorks"
 import { Signin } from "./pages/Signin"
 import { Signup } from "./pages/Signup"
 import { BrowserRouter,Route,Routes } from "react-router-dom"
@@ -19,6 +20,7 @@ function App() {
       <Route path="/signin" element= {<Signin/>}></Route>
       <Route path="/dashboard" element= {<Dashboard/>}></Route>
       <Route path="/features" element={<Features/>} />
+      <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/" element= {<Homepage/>}></Route>
     </Routes>
 
