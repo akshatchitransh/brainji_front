@@ -1,1 +1,1 @@
-export const Backend_URI = "http://localhost:3535"
+export const Backend_URI = "https://brainji.onrender.com"
