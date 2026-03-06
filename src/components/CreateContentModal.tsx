@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { CrossIcon } from "../icons/crossIcon";
 import { Backend_URI } from "../config";
 import axios from "axios";
 
@@ -8,15 +7,13 @@ interface modalprops {
   varchange: (a: boolean) => void;
 }
 
-enum contentType {
-  "Youtube" = "youtube",
-  "Twitter" = "twitter",
-}
+// ✅ Both values exactly match the Content interface: "youtube" | "Twitter"
+type ContentType = "youtube" | "Twitter";
 
 export const CreateContentModal = (props: modalprops) => {
   const handleclose = () => props.varchange(false);
 
-  const [type, setType] = useState(contentType.Youtube);
+  const [type, setType] = useState<ContentType>("youtube");
   const [loading, setLoading] = useState(false);
   const titleref = useRef<HTMLInputElement | null>(null);
   const roleref = useRef<HTMLInputElement | null>(null);
@@ -24,14 +21,20 @@ export const CreateContentModal = (props: modalprops) => {
   async function addContent() {
     const title = titleref.current?.value;
     const link = roleref.current?.value;
+    if (!title || !link) return;
     setLoading(true);
-    await axios.post(
-      `${Backend_URI}/api/auth/content`,
-      { link, title, type },
-      { headers: { Authorization: localStorage.getItem("token") } }
-    );
-    setLoading(false);
-    props.varchange(false);
+    try {
+      await axios.post(
+        `${Backend_URI}/api/auth/content`,
+        { link, title, type },
+        { headers: { Authorization: localStorage.getItem("token") } }
+      );
+      props.varchange(false);
+    } catch (e) {
+      console.error("Failed to save content", e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (!props.open) return null;
@@ -92,7 +95,6 @@ export const CreateContentModal = (props: modalprops) => {
           box-shadow: 0 0 0 3px rgba(99,102,241,0.11), 0 0 18px rgba(99,102,241,0.09);
         }
 
-        /* Type toggle buttons */
         .type-btn {
           display: inline-flex;
           align-items: center;
@@ -105,8 +107,6 @@ export const CreateContentModal = (props: modalprops) => {
           border: 1px solid transparent;
           cursor: pointer;
           transition: all 0.18s ease;
-          position: relative;
-          overflow: hidden;
         }
         .type-btn-active-yt {
           background: rgba(255, 0, 0, 0.12);
@@ -131,7 +131,6 @@ export const CreateContentModal = (props: modalprops) => {
           color: #cbd5e1;
         }
 
-        /* Submit button */
         .submit-btn {
           background-size: 200% auto;
           background-image: linear-gradient(
@@ -200,7 +199,7 @@ export const CreateContentModal = (props: modalprops) => {
         style={{ background: "rgba(5,5,15,0.75)", backdropFilter: "blur(4px)" }}
         onClick={handleclose}
       >
-        {/* Card — stop click from closing */}
+        {/* Card */}
         <div
           className="modal-card relative w-full max-w-md rounded-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
@@ -236,24 +235,22 @@ export const CreateContentModal = (props: modalprops) => {
                 Content Type
               </label>
               <div className="flex gap-2">
-                {/* YouTube */}
+                {/* YouTube — value: "youtube" */}
                 <button
-                  className={`type-btn flex-1 ${type === contentType.Youtube ? "type-btn-active-yt" : "type-btn-inactive"}`}
-                  onClick={() => setType(contentType.Youtube)}
+                  className={`type-btn flex-1 ${type === "youtube" ? "type-btn-active-yt" : "type-btn-inactive"}`}
+                  onClick={() => setType("youtube")}
                 >
-                  {/* YouTube icon */}
                   <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 00.5 6.2C0 8 0 12 0 12s0 4 .5 5.8a3 3 0 002.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 002.1-2.1C24 16 24 12 24 12s0-4-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
                   </svg>
                   YouTube
                 </button>
 
-                {/* Twitter / X */}
+                {/* Twitter — value: "Twitter" */}
                 <button
-                  className={`type-btn flex-1 ${type === contentType.Twitter ? "type-btn-active-tw" : "type-btn-inactive"}`}
-                  onClick={() => setType(contentType.Twitter)}
+                  className={`type-btn flex-1 ${type === "Twitter" ? "type-btn-active-tw" : "type-btn-inactive"}`}
+                  onClick={() => setType("Twitter")}
                 >
-                  {/* X icon */}
                   <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.261 5.632 5.903-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
@@ -319,7 +316,7 @@ export const CreateContentModal = (props: modalprops) => {
           </div>
 
           {/* Bottom accent */}
-          <div className="h-px mx-0" style={{
+          <div className="h-px" style={{
             background: "linear-gradient(to right, transparent, rgba(99,102,241,0.25), transparent)"
           }} />
         </div>
