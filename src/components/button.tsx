@@ -13,7 +13,7 @@ import type { ReactElement } from "react";
     loading?:boolean
 }
 const variantchoice = {
-    "primary":"bg-[#fcba03] ",
+    "primary":"bg-[#FFFFFF] ",
     "secondary":"bg-[#fcba03] ",
     
 }

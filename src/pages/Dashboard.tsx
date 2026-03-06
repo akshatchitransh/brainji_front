@@ -2,6 +2,7 @@ import { Button } from "../components/button"
 import { Card } from "../components/card"
 import { CreateContentModal } from "../components/CreateContentModal"
 import { Sidebar } from "../components/sidebar"
+import { useContent } from "../hooks/useContent"
 
 import { Shareicon } from "../icons/shareicon"
 import { StartIcon } from "../icons/startIcon"
@@ -10,6 +11,7 @@ import { useState } from "react";
 
 export function Dashboard() {
  const [modalOpen,setModalOpen] = useState(false)
+ const contents = useContent();
  
      const  handleopen= ()=>{
 setModalOpen(true)
@@ -32,12 +34,15 @@ setModalOpen(true)
 
 <div className="flex">
 
+{
+  contents.map(({type,link,title})=>
+    <Card title={title} link={link} type={type} />
 
-   <Card title="Shararat" link="https://youtu.be/YyepU5ztLf4?si=P6lSo845c4KTN_Oe" type="youtube" />
-   <Card title="Ajj ki raat" link="https://youtu.be/roz9sXFkTuE?si=bp5gI4u8yIUqMBTh" type="youtube" />
+  )
+}
 
- <Card title="Tweetbabes" link="https://x.com/Sonu_Singha_/status/2016084532441841800" type="Twitter" />
-  <Card title="Ajj ki raat" link="https://youtu.be/bNJY2bwgt58?si=XJ3tjtrQME-J5nX_" type="youtube" />
+
+
 </div>
  <CreateContentModal open={modalOpen} varchange = {setModalOpen}/>
 

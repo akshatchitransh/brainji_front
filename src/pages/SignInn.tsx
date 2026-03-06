@@ -1,8 +1,29 @@
 import { Button } from "../components/button"
 import { Input } from "../components/Input"
-
+import { useRef } from "react"
+import { Backend_URI } from "../config"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 export const Signin = () => {
 
+  const usernameRef = useRef<HTMLInputElement | null>(null)
+  const passwordRef = useRef<HTMLInputElement | null>(null)
+    const navigate = useNavigate();
+  async function signin() {
+    const username = usernameRef.current?.value
+    const password = passwordRef.current?.value
+  
+    console.log("username",username)
+   const response = await axios.post(`${Backend_URI}/api/auth/signin`,{
+          username,password
+         
+    })
+    alert("signedin")
+    const jwt = response.data.token;
+    console.log(response)
+    localStorage.setItem("token",jwt)
+    navigate("/dashboard")
+}
 
 
 
@@ -42,7 +63,7 @@ export const Signin = () => {
                 Username
               </label>
               <Input 
-               
+               reference={usernameRef}
                 placeholder="Enter your username" 
               />
             </div>
@@ -64,7 +85,7 @@ export const Signin = () => {
                 </a>
               </div>
               <Input 
-                
+                reference={passwordRef}
                 placeholder="Enter your password" 
                 type="password"
               />
@@ -77,7 +98,8 @@ export const Signin = () => {
                 text="Sign in" 
                 size="sm" 
                 fullWidth={true} 
-                loading={true}
+                loading={false}
+                onClick={signin}
               />
             </div>
 
