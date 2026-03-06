@@ -664,7 +664,9 @@ export const Homepage = () => {
             <span className="nav-logo-text">Memory</span>
           </div>
           <div className="nav-links">
-            <button className="nav-link">Features</button>
+          <button className="nav-link" onClick={() => navigate("/features")}>
+  Features
+</button>
             <button className="nav-link">How it works</button>
             <button className="nav-link" onClick={() => navigate("/signin")}>Sign in</button>
             <button className="nav-cta" onClick={() => navigate("/signup")}>Get started free →</button>
