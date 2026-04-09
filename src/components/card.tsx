@@ -1,10 +1,15 @@
 import { Shareicon } from "../icons/shareicon"
-
+import axios from "axios"
+import { useContent } from "../hooks/useContent"
+import { Backend_URI } from "../config"
 interface Cardprops {
   title: string
   link: string
   type: "youtube" | "Twitter"
 }
+
+
+
 
 export const Card = (props: Cardprops) => {
   const isYoutube = props.type === "youtube"
