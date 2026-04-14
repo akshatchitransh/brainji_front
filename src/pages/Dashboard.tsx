@@ -1,10 +1,23 @@
+import axios from "axios"
 import { Card } from "../components/card"
 import { CreateContentModal } from "../components/CreateContentModal"
 import { Sidebar } from "../components/sidebar"
 import { useContent } from "../hooks/useContent"
 import { Shareicon } from "../icons/shareicon"
 import { StartIcon } from "../icons/startIcon"
+
+const handleDelete = async (title: string) => {
+  try {
+    await axios.delete(`${Backend_URI}/api/auth/delete`, {
+      data: { title },   
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 import { useState } from "react"
+import { Backend_URI } from "../config"
+
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -360,7 +373,7 @@ export function Dashboard() {
             ) : (
               <div className="cards-grid">
                 {contents.map(({ type, link, title }, i) => (
-                  <Card key={i} title={title} link={link} type={type} />
+                  <Card key={i} title={title} link={link} type={type} onDelete={handleDelete}  />
                 ))}
               </div>
             )}
