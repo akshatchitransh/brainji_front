@@ -3,7 +3,7 @@ import { Card } from "../components/card"
 import { CreateContentModal } from "../components/CreateContentModal"
 import { Sidebar } from "../components/sidebar"
 import { useContent } from "../hooks/useContent"
-import { Shareicon } from "../icons/shareicon"
+
 import { StartIcon } from "../icons/startIcon"
 
 
