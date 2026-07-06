@@ -380,10 +380,7 @@ const contents = useContent()
                   <StartIcon />
                   Add Content
                 </button>
-                <button className="btn-share">
-                  <Shareicon />
-                  Share Brain
-                </button>
+                
               </div>
             </div>
           </div>
