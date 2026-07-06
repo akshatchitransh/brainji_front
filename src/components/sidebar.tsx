@@ -206,7 +206,7 @@ export const Sidebar = () => {
 
           {/* Twitter */}
           <a className="sidebar-nav-item" href="#">
-            <span style={{ width: 16, height: 16, display: "flex", alignItems: "center", flexShrink: 0, color: "inherit" }}>
+            <span  style={{ width: 16, height: 16, display: "flex", alignItems: "center", flexShrink: 0, color: "inherit" }}>
               <TwitterIcon />
             </span>
             Twitter

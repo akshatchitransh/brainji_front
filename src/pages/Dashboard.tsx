@@ -6,6 +6,7 @@ import { useContent } from "../hooks/useContent"
 import { Shareicon } from "../icons/shareicon"
 import { StartIcon } from "../icons/startIcon"
 
+
 const handleDelete = async (title: string) => {
   try {
     await axios.delete(`${Backend_URI}/api/auth/delete`, {
@@ -20,11 +21,29 @@ import { Backend_URI } from "../config"
 
 
 export function Dashboard() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const contents = useContent()
+const [modalOpen, setModalOpen] = useState(false)
+const [query, setQuery] = useState("")
+const [searchResults, setSearchResults] = useState<any[]>([])
+
+const contents = useContent()
 
   const youtubeCount = contents.filter(c => c.type === "youtube").length
   const twitterCount = contents.filter(c => c.type === "Twitter").length
+
+  const handleSearch = async () => {
+  try {
+    const res = await axios.post(
+      `${Backend_URI}/api/auth/search`,
+      {
+        query,
+      }
+    );
+
+    setSearchResults(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   return (
     <>
@@ -333,6 +352,28 @@ export function Dashboard() {
                 )}
               </div>
 
+
+<div style={{ display: "flex", gap: 10 }}>
+  <input
+    type="text"
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    placeholder="Search..."
+    style={{
+      padding: "8px 12px",
+      borderRadius: "8px",
+      border: "1px solid #444",
+      background: "#111",
+      color: "white",
+    }}
+  />
+
+  <button className="btn-share" onClick={handleSearch}>
+    Search
+  </button>
+</div>
+
+
               {/* Action buttons */}
               <div className="topbar-actions">
                 <button className="btn-add" onClick={() => setModalOpen(true)}>
@@ -372,9 +413,15 @@ export function Dashboard() {
               </div>
             ) : (
               <div className="cards-grid">
-                {contents.map(({ type, link, title }, i) => (
-                  <Card key={i} title={title} link={link} type={type} onDelete={handleDelete}  />
-                ))}
+               {(searchResults.length > 0 ? searchResults : contents).map((item: any, i) => (
+  <Card
+    key={i}
+    title={item.metadata ? item.metadata.text : item.title}
+    link={item.link}
+    type={item.type}
+    onDelete={handleDelete}
+  />
+))}
               </div>
             )}
           </div>
